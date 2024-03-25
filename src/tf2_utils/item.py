@@ -140,14 +140,49 @@ class Item:
         return DEFINDEX.get(target_item_name,-1)
 
     def get_output_defindex(self) -> int:
-        if not self.is_killstreak():
+        kit_output_desc = {'value': 'You will receive all of the following outputs once all of the inputs are fulfilled.'}
+        if not self.is_killstreak() or kit_output_desc not in self.descriptions  or self.get_defindex() in [6527, 6523, 6526,
+            6527, # general
+            5726, # Rocket Launcher
+            5727, # Scattergun
+            5728, # Sniper Rifle
+            5729, # Shotgun
+            5730, # Ubersaw
+            5731, # GRU
+            5732, # Spy-cicle
+            5733, # Axtinguisher
+            5743, # Sticky Launcher
+            5744, # Minigun
+            5745, # Direct Hit
+            5746, # Huntsman
+            5747, # Backburner
+            5748, # Backscatter
+            5749, # Kritzkrieg
+            5750, # Ambassador
+            5751, # Frontier Justice
+            5793, # Flaregun
+            5794, # Wrench
+            5795, # Revolver
+            5796, # Machina
+            5797, # Baby Face Blaster
+            5798, # Huo Long Heatmaker
+            5799, # Loose Cannon
+            5800, # Vaccinator
+            5801 # Air Strike
+        ]:
             return -1
+
         tier = self.get_killstreak_id()
-        
+
         return [6527, 6523, 6526][tier - 1]
     
     def get_output_quality(self) -> int:
-        if not self.is_killstreak():
+        kit_output_desc = {'value': 'You will receive all of the following outputs once all of the inputs are fulfilled.'}
+        if not self.is_killstreak() or kit_output_desc not in self.descriptions:
+            return -1
+        
+        tier = self.get_killstreak_id()
+        if tier < 2:
             return -1
 
         return 6
