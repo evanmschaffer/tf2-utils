@@ -1,5 +1,5 @@
 from tf2_data import QUALITIES, KILLSTREAKS, EXTERIORS
-
+from .defindex import DEFINDEX
 
 class Item:
     def __init__(self, item: dict) -> None:
@@ -124,6 +124,33 @@ class Item:
             return -1
 
         return KILLSTREAKS[self.get_killstreak()]
+    
+    def get_target_defindex(self) -> int:
+        kit_output_desc = {'value': 'You will receive all of the following outputs once all of the inputs are fulfilled.'}
+        if not self.is_killstreak() or kit_output_desc not in self.descriptions:
+            return -1
+        
+        kit_output_i = 1 + self.descriptions.index(kit_output_desc)
+        kit_output_name = self.descriptions[kit_output_i]['value']
+        tier = self.get_killstreak_id()
+        if tier and tier >= 1:
+            target_item_name = kit_output_name.replace(['Killstreak', 'Specialized Killstreak', 'Professional Killstreak'][tier - 1], '')
+            target_item_name = target_item_name.replace('Kit', '').strip()
+        
+        return DEFINDEX.get(target_item_name,-1)
+
+    def get_output_defindex(self) -> int:
+        if not self.is_killstreak():
+            return -1
+        tier = self.get_killstreak_id()
+        
+        return [6527, 6523, 6526][tier - 1]
+    
+    def get_output_quality(self) -> int:
+        if not self.is_killstreak():
+            return -1
+
+        return 6
 
     def get_exterior(self) -> str:
         for tag in self.tags:

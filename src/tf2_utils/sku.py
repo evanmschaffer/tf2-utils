@@ -28,12 +28,12 @@ def get_sku_properties(item: Item | dict) -> dict:
         # "skin": "pk{}",
         # "strange": "strange",
         # "killstreak_tier": "kt-{}",
-        # "target_defindex": "td-{}",
+        "target_defindex": item.get_target_defindex(),
         # "festivized": "festive",
         # "craft_number": "n{}",
         # "crate_number": "c{}",
-        # "output_defindex": "od-{}",
-        # "output_quality": "oq-{}",
+        "output_defindex": item.get_output_defindex(),
+        "output_quality": item.get_output_quality(),
     }
 
     if effect:
